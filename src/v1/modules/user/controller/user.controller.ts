@@ -1,5 +1,9 @@
-export const findUser = async (req, res) => {
-	try {
-		return { message: "Hello World!" };
-	} catch (err) {}
+import userService from "../service/user.service";
+
+export default {
+	findUser: async ({ params: { id } }, reply: Response) => {
+		try {
+			return userService.findUser(id);
+		} catch (err) {}
+	},
 };

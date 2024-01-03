@@ -1,4 +1,7 @@
-export const findUser = async (req, res) => {
-	console.log(req);
-	return { message: "no" };
+export default {
+	findUser: async (id: string) => {
+		try {
+			return { idUser: id };
+		} catch (err) {}
+	},
 };

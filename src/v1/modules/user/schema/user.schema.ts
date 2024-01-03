@@ -1,18 +1,20 @@
-export const findUsers = {
-	query: {
-		type: "object",
-		properties: {
-			userId: {
-				type: "string",
+export default {
+	findUser: {
+		params: {
+			type: "object",
+			properties: {
+				id: {
+					type: "string",
+				},
 			},
+			required: ["id"],
 		},
-		required: ["userId"],
-	},
-	headers: {
-		type: "object",
-		properties: {
-			Authorization: { type: "string" },
+		headers: {
+			type: "object",
+			properties: {
+				Authorization: { type: "string" },
+			},
+			additionalProperties: true,
 		},
-		additionalProperties: true,
 	},
 };
