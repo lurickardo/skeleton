@@ -11,11 +11,9 @@
     "start:dev": "cls || clear && ts-node-dev --respawn --transpile-only --env-file=.env src/main.ts",
     "start:debug": "cls || clear && ts-node-dev --respawn --transpile-only --debug --env-file=.env src/main.ts",
     "start:prod": "cls || clear && node dist/main",
-    "test": "jest",
-    "test:watch": "jest --watch",
-    "test:cov": "jest --coverage",
-    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "test": "jest --config ./test/jest.config.json",
+    "test:watch": "jest --config ./test/jest.config.json --watch",
+    "test:cov": "jest --config ./test/jest.config.json --collect-coverage",
     "lint": "npx @biomejs/biome check --apply-unsafe src/"
   },
   "dependencies": {
