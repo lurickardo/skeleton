@@ -1,8 +1,8 @@
 import fastify from 'fastify'
-import config from './config'
-import { registerPlugins } from './plugins'
 import routes from './app.module'
 import clusterize from './clusterize'
+import config from './config'
+import { registerPlugins } from './plugins'
 
 const server = fastify({
   logger: true
@@ -10,7 +10,6 @@ const server = fastify({
 
 async function bootstrap() {
   try {
-    //server.setErrorHandler((error, request, reply) =>   (error, request, reply));
     registerPlugins(server, config);
     server.register(routes, { prefix: config.stripPrefix.path })
     server.listen({ port: config.app.port || 3000 })
