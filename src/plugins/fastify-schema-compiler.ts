@@ -1,4 +1,5 @@
-const Ajv = require("ajv");
+import Ajv from "ajv";
+import { FastifyInstance } from "fastify";
 
 const ajvInstance = new Ajv({
 	removeAdditional: true,
@@ -31,7 +32,7 @@ const schemaCompilers = {
 	headers: ajvInstance,
 };
 
-export default (fastify) => {
+export default (fastify: FastifyInstance) => {
 	fastify.setValidatorCompiler((req) => {
 		if (!req.httpPart) {
 			throw new Error("Missing httpPart");
