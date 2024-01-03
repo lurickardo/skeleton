@@ -1,7 +1,5 @@
 export const findUser = async (req, res) => {
-    try {
-
-    } catch (err) {
-        
-    }
-}
+	try {
+		return { message: "Hello World!" };
+	} catch (err) {}
+};

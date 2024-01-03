@@ -1,2 +1,2 @@
-import { findUsersRoute } from './route';
-export default [findUsersRoute]
+import { findUsersRoute } from "./route";
+export default [findUsersRoute];
