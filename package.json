@@ -10,7 +10,7 @@
     "start": "cls || clear && node -r ts-node/register --env-file=.env src/main.ts",
     "start:dev": "cls || clear && ts-node-dev --respawn --transpile-only --env-file=.env src/main.ts",
     "start:debug": "cls || clear && ts-node-dev --respawn --transpile-only --debug --env-file=.env src/main.ts",
-    "start:prod": "cls || clear && node dist/main",
+    "start:prod": "cls || clear && node dist/src/main",
     "test": "jest --config ./test/jest.config.json",
     "test:watch": "jest --config ./test/jest.config.json --watch",
     "test:cov": "jest --config ./test/jest.config.json --collect-coverage",
