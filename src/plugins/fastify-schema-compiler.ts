@@ -32,7 +32,7 @@ const schemaCompilers = {
 	headers: ajvInstance,
 };
 
-export default (fastify: FastifyInstance) => {
+export const schemaCompiler = (fastify: FastifyInstance) => {
 	fastify.setValidatorCompiler((req) => {
 		if (!req.httpPart) {
 			throw new Error("Missing httpPart");

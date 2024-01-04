@@ -1,5 +1,5 @@
-export default {
-	findUser: {
+export const userSchema = {
+	findById: {
 		params: {
 			type: "object",
 			properties: {

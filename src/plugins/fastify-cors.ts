@@ -1,9 +1,9 @@
 import fastifyCors from "@fastify/cors";
 import { FastifyInstance } from "fastify";
 
-export default (fastify: FastifyInstance) => {
+export const cors = (fastify: FastifyInstance) => {
 	fastify.register(fastifyCors, {
 		origin: "*",
-		methods: ["GET", "POST", "PUT", "PATCH","DELETE"]
+		methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
 	});
 };

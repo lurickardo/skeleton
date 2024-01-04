@@ -3,7 +3,7 @@ import fastifySwaggerUi from "@fastify/swagger-ui";
 import { FastifyInstance } from "fastify";
 import { description, name, version } from "../../package.json";
 
-export default async (fastify: FastifyInstance, config: any) => {
+export const swagger = async (fastify: FastifyInstance, config: any) => {
 	await fastify.register(fastifySwagger, {
 		swagger: {
 			info: {

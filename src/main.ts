@@ -1,7 +1,7 @@
 import fastify, { FastifyInstance } from "fastify";
-import routes from "./app.module";
-import clusterize from "./clusterize";
-import config from "./config";
+import { routes } from "./app.module";
+import { clusterize } from "./clusterize";
+import { env } from "./config/env";
 import { errorHandler } from "./config/error";
 import { registerPlugins } from "./plugins";
 
@@ -14,9 +14,9 @@ async function bootstrap(): Promise<void> {
 		server.setErrorHandler((error, request, reply) =>
 			errorHandler(error, request, reply),
 		);
-		registerPlugins(server, config);
-		server.register(routes, { prefix: config.stripPrefix.path });
-		await server.listen({ port: config.app.port || 3000 });
+		registerPlugins(server, env);
+		server.register(routes, { prefix: env.stripPrefix.path });
+		await server.listen({ port: env.app.port || 3000 });
 	} catch (err) {
 		server.log.error(err);
 		process.exit(1);
