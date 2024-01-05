@@ -17,4 +17,18 @@ export const userSchema = {
 			additionalProperties: true,
 		},
 	},
+	create: {
+		body: {
+			type: "object",
+			properties: {
+				name: {
+					type: "string",
+				},
+				email: {
+					type: "string",
+				},
+			},
+			required: ["name", "email"],
+		},
+	},
 };

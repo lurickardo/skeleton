@@ -14,4 +14,15 @@ const findById = {
 	handler: userController.findById,
 };
 
-export const userRouteV1 = [findById];
+const create = {
+	method: "POST",
+	url: "/v1/user",
+	schema: {
+		tags: ["v1"],
+		summary: "Create user",
+		...userSchema.create,
+	},
+	handler: userController.create,
+};
+
+export const userRouteV1 = [findById, create];

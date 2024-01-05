@@ -17,8 +17,8 @@ async function bootstrap(): Promise<void> {
 		registerPlugins(server, env);
 		server.register(routes, { prefix: env.stripPrefix.path });
 		await server.listen({ port: env.app.port || 3000 });
-	} catch (err) {
-		server.log.error(err);
+	} catch (error) {
+		server.log.error(error);
 		process.exit(1);
 	}
 }
