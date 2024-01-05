@@ -1,7 +1,7 @@
 import fastify, { FastifyInstance } from "fastify";
 import { routes } from "./app.module";
 import { clusterize } from "./clusterize";
-import { env } from "./config/env";
+import { env } from "./config";
 import { errorHandler } from "./config/error";
 import { registerPlugins } from "./plugins";
 
