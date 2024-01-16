@@ -9,7 +9,7 @@ export const userController = {
 
 	create: async ({ body }: FastifyRequest, reply: FastifyReply) => {
 		return reply
-			.code(200)
+			.code(201)
 			.send(await userService.create(transformUserDto(body)));
 	},
 };

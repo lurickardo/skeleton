@@ -6,7 +6,7 @@ export const errorHandler = (
 	request: FastifyRequest,
 	reply: FastifyReply,
 ) => {
-	if (error.message && error?.statusCode) {
+	if (error.message && error.statusCode) {
 		return reply.status(error.statusCode).send({
 			statusCode: error.statusCode,
 			message: error.message,
@@ -14,7 +14,7 @@ export const errorHandler = (
 		});
 	}
 
-	console.error(
+	process.stdout.write(
 		`\n \x1b[41m--- UNEXPECTED ERROR --- \x1b[0m\n ${error}\n \x1b[41m--- END UNEXPECTED ERROR --- \x1b[0m\n`,
 	);
 	return reply.status(HttpStatus.INTERNAL_SERVER_ERROR).send({
