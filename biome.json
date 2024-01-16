@@ -11,7 +11,8 @@
 				"noExplicitAny": "off"
 			},
 			"complexity": {
-				"noForEach": "off"
+				"noForEach": "off",
+				"noUselessCatch": "off"
 			}
 		}
 	}
