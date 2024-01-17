@@ -17,22 +17,18 @@ export const userService = {
 	},
 
 	listAll: async () => {
-		try {
-			return [
-				{
-					_id: String(Math.floor(Math.random() * 1000)),
-					name: "Jhon Doe",
-					email: "jhondoe@gmail.com",
-				},
-				{
-					_id: String(Math.floor(Math.random() * 1000)),
-					name: "Foo Bar",
-					email: "foobar@gmail.com",
-				},
-			];
-		} catch (error) {
-			throw error;
-		}
+		return [
+			{
+				_id: String(Math.floor(Math.random() * 1000)),
+				name: "Jhon Doe",
+				email: "jhondoe@gmail.com",
+			},
+			{
+				_id: String(Math.floor(Math.random() * 1000)),
+				name: "Foo Bar",
+				email: "foobar@gmail.com",
+			},
+		];
 	},
 
 	create: async (createUserDto: createUserDto) => {
