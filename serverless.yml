@@ -1,0 +1,17 @@
+service:
+  name: skeleton
+
+useDotenv: true
+
+plugins:
+  - serverless-plugin-optimize
+  - serverless-offline
+
+provider:
+  name: aws
+  timeout: 600
+  runtime: nodejs20.x
+  environment: ${file(ymls/environment.yml)}
+
+functions: ${file(ymls/functions.yml)}
+

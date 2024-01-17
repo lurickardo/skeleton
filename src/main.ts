@@ -1,26 +1,26 @@
 import fastify, { FastifyInstance } from "fastify";
 import { routes } from "./app.module";
-import { clusterize } from "./clusterize";
 import { env } from "./config";
 import { errorHandler } from "./config/error";
 import { registerPlugins } from "./plugins";
 
-const server: FastifyInstance = fastify({
-	logger: true,
-});
+const bootstrap = (): FastifyInstance => {
+	const server: FastifyInstance = fastify({
+		logger: true,
+	});
+	server.setErrorHandler((error, request, reply) =>
+		errorHandler(error, request, reply),
+	);
+	registerPlugins(server, env);
+	server.register(routes, { prefix: env.stripPrefix.path });
+	return server;
+};
 
-async function bootstrap(): Promise<void> {
-	try {
-		server.setErrorHandler((error, request, reply) =>
-			errorHandler(error, request, reply),
-		);
-		registerPlugins(server, env);
-		server.register(routes, { prefix: env.stripPrefix.path });
-		await server.listen({ port: env.app.port || 3000 });
-	} catch (error) {
-		server.log.error(error);
-		process.exit(1);
-	}
+if (require.main === module) {
+	bootstrap().listen({ port: 3000 }, (err) => {
+		if (err) console.error(err);
+		console.log("server listening on 3000");
+	});
 }
 
-clusterize(bootstrap);
+export { bootstrap };
