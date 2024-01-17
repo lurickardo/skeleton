@@ -15,5 +15,15 @@
 				"noUselessCatch": "off"
 			}
 		}
+	},
+	"files": {
+		"ignore": [
+			"node_modules/",
+			"coverage/",
+			"dist/",
+			"package-lock.json",
+			"README.md",
+			"LICENS"
+		]
 	}
 }

@@ -2,6 +2,8 @@
 	"preset": "ts-jest",
 	"moduleFileExtensions": ["js", "json", "ts"],
 	"rootDir": "../",
+	"collectCoverage": true,
+	"coverageDirectory": "coverage",
 	"collectCoverageFrom": [
 		"src/**/*.{ts,js}",
 		"!src/**/*.spec.{ts,js}",
@@ -15,6 +17,14 @@
 		"!src/config/index.{ts,js}",
 		"!src/*.{ts,js}"
 	],
+	"coverageThreshold": {
+		"global": {
+			"statements": 95,
+			"branches": 95,
+			"functions": 95,
+			"lines": 95
+		}
+	},
 	"testEnvironment": "node",
 	"testMatch": ["**/tests/**/*.(js|ts)?(x)", "**/?(*.)+(spec|test).(js|ts)?(x)"]
 }
