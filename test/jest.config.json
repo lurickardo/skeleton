@@ -1,20 +1,20 @@
 {
-    "preset": "ts-jest",
-    "moduleFileExtensions": ["js", "json", "ts"],
-    "rootDir": "../",
-    "collectCoverageFrom": [
-        "src/**/*.{ts,js}",
-        "!src/**/*.spec.{ts,js}",
-        "!src/**/*.test.{ts,js}",
-        "!src/**/*.module.{ts,js}",
-        "!src/**/*.route.{ts,js}",
-        "!src/**/*.schema.{ts,js}",
-        "!src/**/dto/**/*.{ts,js}",
-        "!src/plugins/**/*.{ts,js}",
-        "!src/config/error/**/*.{ts,js}",
-        "!src/config/index.{ts,js}",
-        "!src/*.{ts,js}"
-    ],
-    "testEnvironment": "node",
-    "testMatch": ["**/tests/**/*.(js|ts)?(x)", "**/?(*.)+(spec|test).(js|ts)?(x)"]
+	"preset": "ts-jest",
+	"moduleFileExtensions": ["js", "json", "ts"],
+	"rootDir": "../",
+	"collectCoverageFrom": [
+		"src/**/*.{ts,js}",
+		"!src/**/*.spec.{ts,js}",
+		"!src/**/*.test.{ts,js}",
+		"!src/**/*.module.{ts,js}",
+		"!src/**/*.route.{ts,js}",
+		"!src/**/*.schema.{ts,js}",
+		"!src/**/dto/**/*.{ts,js}",
+		"!src/plugins/**/*.{ts,js}",
+		"!src/config/error/**/*.{ts,js}",
+		"!src/config/index.{ts,js}",
+		"!src/*.{ts,js}"
+	],
+	"testEnvironment": "node",
+	"testMatch": ["**/tests/**/*.(js|ts)?(x)", "**/?(*.)+(spec|test).(js|ts)?(x)"]
 }

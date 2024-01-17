@@ -14,7 +14,8 @@
     "test": "jest --runInBand --config ./test/jest.config.json",
     "test:watch": "jest --runInBand --config ./test/jest.config.json --watch",
     "test:cov": "jest --runInBand --config ./test/jest.config.json --collect-coverage",
-    "lint": "npx @biomejs/biome check --apply-unsafe src/"
+    "lint": "npx @biomejs/biome format ./src --write",
+    "lint:check": "npx @biomejs/biome check ./src"
   },
   "dependencies": {
     "@fastify/cors": "^8.5.0",
