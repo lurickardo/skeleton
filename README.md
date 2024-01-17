@@ -17,6 +17,11 @@
 
 Skeleton is a generic software architecture framework in Node.js using Fastify, designed to provide a flexible and reusable foundation for application development.
 
+## Philosophy
+
+The idea of the system is to be a base architecture for you to develop your own small or large-scale services, without the need to recreate existing solutions. At the same time, not forcing you to use a complete and heavy structure.
+Each branch was created to exemplify synergistic implementations with the code base, working like "Lego pieces", where you can take only what is necessary for your version of the system and implement it in the best way possible.
+
 # Libraries
 
 - NodeJS
