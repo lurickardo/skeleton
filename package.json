@@ -11,7 +11,7 @@
     "start:dev": "cls || clear && ts-node-dev --respawn --transpile-only --env-file=.env src/main.ts",
     "start:debug": "cls || clear && ts-node-dev --respawn --transpile-only --debug --env-file=.env src/main.ts",
     "start:prod": "cls || clear && node dist/src/main",
-    "test": "jest --coverage --config ./test/jest.config.json",
+    "test": "jest --runInBand --coverage --config ./test/jest.config.json",
     "test:watch": "jest --runInBand --config ./test/jest.config.json --watch",
     "test:cov": "jest --runInBand --config ./test/jest.config.json --collect-coverage",
     "lint": "npx @biomejs/biome format ./ --write",
