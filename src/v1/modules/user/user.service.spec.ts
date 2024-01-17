@@ -4,7 +4,11 @@ describe("Unit tests for user service", () => {
 	describe("findById", () => {
 		it("should have return correctly", async () => {
 			const result = await userService.findById("1");
-			expect(result).toEqual({ idUser: "1" });
+			expect(result).toEqual({
+				_id: "1",
+				name: "Jhon Doe",
+				email: "jhondoe@gmail.com",
+			});
 		});
 
 		it("should return error becose no have id", async () => {
