@@ -4,7 +4,7 @@
   "description": "Lambda responsável pelo gerenciamento de abrigos do sistema Pluvial.",
   "author": "Beatriz Assunção, Ian Soares, Luiz Ricardo Santos, Nader Hadad Souza e Yumi Tokuo",
   "private": true,
-  "license": "UNLICENSED",
+  "license": "MIT",
   "scripts": {
     "build": "tsc",
     "start": "cls || clear && node -r ts-node/register --env-file=.env src/main.ts",
