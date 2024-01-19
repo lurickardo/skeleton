@@ -7,8 +7,8 @@
   "license": "MIT",
   "scripts": {
     "build": "tsc",
-    "lambda:start:dev": "npm run build && npx serverless offline start --reloadHandler",
-    "lambda:start:deploy": "serverless deploy",
+    "lambda:start:dev": "cls || clear && npm run build && npx serverless offline start --reloadHandler",
+    "lambda:start:deploy": "cls || clear && serverless deploy",
     "test": "jest --runInBand --coverage --config ./test/jest.config.json",
     "test:watch": "jest --runInBand --config ./test/jest.config.json --watch",
     "test:cov": "jest --runInBand --config ./test/jest.config.json --collect-coverage",

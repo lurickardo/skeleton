@@ -17,9 +17,9 @@ const bootstrap = (): FastifyInstance => {
 };
 
 if (require.main === module) {
-	bootstrap().listen({ port: 3000 }, (err) => {
+	bootstrap().listen({ port: env.app.port || 3000 }, (err) => {
 		if (err) console.error(err);
-		console.log("server listening on 3000");
+		console.log(`server listening on ${env.app.port || 3000}`);
 	});
 }
 

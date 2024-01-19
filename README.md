@@ -9,6 +9,7 @@
   <a href="https://nodejs.org" target="_blank"><img src="https://img.shields.io/badge/node-v20.10.0-green?logo=nodedotjs" alt="Node Version"></a>
   <a href="https://www.typescriptlang.org" target="_blank"><img src="https://img.shields.io/badge/typescript-v5.3.3-green?logo=typescript" alt="Typescript Version"></a>
   <a href="https://fastify.dev" target="_blank"><img src="https://img.shields.io/badge/fastify-v4.25.2-green?logo=fastify" alt="Fastify Version"></a>
+  <a href="https://fastify.dev" target="_blank"><img src="https://img.shields.io/badge/aws_lambda-v3.5.0-green?logo=aws-lambda" alt="AWS Lambda Version"></a>
   <a href="https://jestjs.io" target="_blank"><img src="https://img.shields.io/badge/jest-v29.7.0-green?logo=jest" alt="Jest Version"></a>
   <a href="https://biomejs.dev" target="_blank"><img src="https://img.shields.io/badge/biome-v1.5.2-green?logo=biome" alt="Biome Version"></a>
 </p>
@@ -21,6 +22,18 @@ Skeleton is a generic software architecture framework in Node.js using Fastify, 
 
 The idea of the system is to be a base architecture for you to develop your own small or large-scale services, without the need to recreate existing solutions. At the same time, not forcing you to use a complete and heavy structure.
 Each branch was created to exemplify synergistic implementations with the code base, working like "Lego pieces", where you can take only what is necessary for your version of the system and implement it in the best way possible.
+
+# Changed files
+- :eight_pointed_black_star: .env.example
+- :eight_pointed_black_star: package.json
+- :eight_spoked_asterisk: serverless.yml
+- :no_entry: src/clusterize.ts
+- :eight_pointed_black_star: src/config/index.ts
+- :eight_spoked_asterisk: src/lambda.ts
+- :eight_pointed_black_star: src/main.ts
+- :eight_pointed_black_star: src/plugins/fastify-swagger.ts
+- :eight_spoked_asterisk: ymls/environment.yml
+- :eight_spoked_asterisk: ymls/functions.yml
 
 # Libraries
 
@@ -40,13 +53,13 @@ $ npm install
 
 ```bash
 # development
-$ npm run start:dev
+$ npm run lambda:start:dev
+# IMPORTANT: environment variable "OFFLINE" must be true for swagger to work correctly
 
 # production
-$ npm run build
-$ npm run start:prod
+$ npm run lambda:start:deploy
 ```
 
-## Swagger
+## Offline Swagger
 
-`http://localhost:3000/api/skeleton/docs`
+`http://localhost:3000/dev/api/skeleton/docs`
