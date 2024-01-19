@@ -1,5 +1,4 @@
-service:
-  name: skeleton
+service: skeleton
 
 useDotenv: true
 

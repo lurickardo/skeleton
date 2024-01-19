@@ -1,60 +1,9 @@
-findById:
-  handler: main.findById
+functions:
+  handler: dist/src/lambda.handler
   events:
     - http:
-        path: v1/user/:id
-        method: GET
-        cors:
-          origin: '*'
-          headers:
-            - Content-Type
-            - Authorization
-          allowCredentials: false
-
-listAll:
-  handler: main.listAll
-  events:
+        method: ANY
+        path: /
     - http:
-        path: v1/user
-        method: GET
-        cors:
-          origin: '*'
-          headers:
-            - Content-Type
-          allowCredentials: false
-
-create:
-  handler: main.create
-   events:
-    - http:
-        path: v1/user
-        method: POST
-        cors:
-          origin: '*'
-          headers:
-            - Content-Type
-          allowCredentials: false
-
-update:
-  handler: index.update
-  events:
-    - http:
-        path: v1/user
-        method: PUT
-        cors:
-          origin: '*'
-          headers:
-            - Content-Type
-          allowCredentials: false
-
-delete:
-  handler: index.delete
-  events:
-    - http:
-        path: v1/user
-        method: DELETE
-        cors:
-          origin: '*'
-          headers:
-            - Content-Type
-          allowCredentials: false
+        method: ANY
+        path: '{proxy+}'

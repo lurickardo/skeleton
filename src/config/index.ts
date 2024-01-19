@@ -4,6 +4,7 @@ export const env = Object.freeze({
 	app: {
 		port: Number(process.env.PORT),
 		environment: process.env.APP_ENVIRONMENT,
+		offline: process.env.OFFLINE,
 	},
 	plugins: {
 		swagger: {

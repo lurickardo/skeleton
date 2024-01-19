@@ -18,6 +18,7 @@ export const swagger = async (fastify: FastifyInstance, config: any) => {
 				url: "https://swagger.io",
 				description: "Find more info here",
 			},
+			basePath: `${config.app.offline === "true" ? "/dev" : ""}`,
 		},
 	});
 
