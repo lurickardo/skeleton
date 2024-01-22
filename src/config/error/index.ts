@@ -19,14 +19,16 @@ export const errorHandler = (
 	reply: FastifyReply,
 ) => {
 	const error = { ...genericError };
-	
+
 	if (isFastifyError(error)) {
-		const validationContext = error.validationContext ? `${error.validationContext} ` : ''
+		const validationContext = error.validationContext
+			? `${error.validationContext} `
+			: "";
 		return reply.status(400).send({
-				statusCode: error.statusCode,
-				message: `Invalid request ${validationContext}input`,
-				timestamp: new Date(),
-			});
+			statusCode: error.statusCode,
+			message: `Invalid request ${validationContext}input`,
+			timestamp: new Date(),
+		});
 	}
 
 	if (isZodError(error)) {
