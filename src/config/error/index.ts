@@ -2,10 +2,24 @@ import { FastifyReply, FastifyRequest } from "fastify";
 import * as HttpStatus from "http-status";
 
 export const errorHandler = (
-	error,
+	genericError: any,
 	request: FastifyRequest,
 	reply: FastifyReply,
 ) => {
+	const error = JSON.parse(JSON.stringify(genericError));
+
+	if (error.issues) {
+		const message = error.issues.map((error) => {
+			return error.message;
+		});
+
+		return reply.status(400).send({
+			statusCode: 400,
+			message,
+			timestamp: new Date(),
+		});
+	}
+
 	if (error.message && error.statusCode) {
 		return reply.status(error.statusCode).send({
 			statusCode: error.statusCode,

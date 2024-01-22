@@ -1,6 +1,6 @@
 import * as HttpStatus from "http-status";
 import { httpException } from "../../../../src/config/error";
-import { createUserDto } from "./dto/create.dto";
+import { CreateUserDto } from "./dto";
 
 export const userService = {
 	findById: async (id: string) => {
@@ -31,7 +31,7 @@ export const userService = {
 		];
 	},
 
-	create: async (createUserDto: createUserDto) => {
+	create: async (createUserDto: CreateUserDto) => {
 		try {
 			if (!createUserDto)
 				throw httpException("User data was not sent.", HttpStatus.BAD_REQUEST);
@@ -45,7 +45,7 @@ export const userService = {
 		}
 	},
 
-	update: async (id: string, createUserDto: createUserDto) => {
+	update: async (id: string, createUserDto: CreateUserDto) => {
 		try {
 			if (!id) throw httpException("Id user not found.", HttpStatus.NOT_FOUND);
 			if (!createUserDto)
