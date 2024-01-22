@@ -1,5 +1,12 @@
 import * as application from "../../package.json";
 
+type Env = {
+	app: { port: number; environment: string };
+	plugins: { swagger: { basePath: string } };
+	stripPrefix: { path: string };
+	database: { name: string; url: string };
+};
+
 export const env = Object.freeze({
 	app: {
 		port: Number(process.env.PORT),
@@ -15,8 +22,8 @@ export const env = Object.freeze({
 	stripPrefix: {
 		path: `/api/${application.name.replace(/-/g, "")}`,
 	},
-	db: {
+	database: {
 		name: process.env.DB_NAME,
 		url: process.env.DB_URL,
 	},
-} as any);
+} as Env);
