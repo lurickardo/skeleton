@@ -12,6 +12,8 @@ const findById = {
 	},
 	preHandler: userMiddleware.findById,
 	handler: userController.findById,
+	apisSorter: "alpha",
+	operationsSorter: "method",
 };
 
 const listAll = {
@@ -37,7 +39,7 @@ const create = {
 };
 
 const update = {
-	method: "PATCH",
+	method: "PUT",
 	url: "/v1/user/:id",
 	schema: {
 		tags: ["v1"],

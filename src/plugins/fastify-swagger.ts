@@ -25,8 +25,18 @@ export const swagger = async (fastify: FastifyInstance, config: any) => {
 		routePrefix: `${config.stripPrefix.path}/docs`,
 		initOAuth: {},
 		uiConfig: {
-			docExpansion: "full",
+			docExpansion: "list",
 			deepLinking: false,
+			operationsSorter: (a: any, b: any) => {
+				const order = {
+					get: "0",
+					post: "1",
+					put: "2",
+					patch: "3",
+					delete: "4",
+				};
+				return order[a.get("method")].localeCompare(order[b.get("method")]);
+			},
 		},
 		uiHooks: {
 			onRequest(request, reply, next) {
