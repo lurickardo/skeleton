@@ -1,8 +1,8 @@
 {
   "name": "skeleton",
   "version": "1.0.0",
-  "description": "Lambda responsável pelo gerenciamento de abrigos do sistema Pluvial.",
-  "author": "Beatriz Assunção, Ian Soares, Luiz Ricardo Santos, Nader Hadad Souza e Yumi Tokuo",
+  "description": "Generic software architecture framework in Node.js using Fastify, designed to provide a flexible and reusable foundation for application development.",
+  "author": "Luiz Ricardo Santos",
   "private": true,
   "license": "MIT",
   "scripts": {
@@ -28,7 +28,7 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
-    "@biomejs/biome": "1.5.2",
+    "@biomejs/biome": "1.5.3",
     "@types/jest": "^29.5.11",
     "husky": "^4.3.8",
     "jest": "^29.7.0",
