@@ -13,6 +13,10 @@ const isFlowError = (error: any): boolean => {
 	return error.message && error.statusCode;
 };
 
+const isJwtError = (error: any): boolean => {
+	return error.name && error.message;
+};
+
 export const errorHandler = (
 	genericError: any,
 	request: FastifyRequest,
@@ -24,9 +28,30 @@ export const errorHandler = (
 		const validationContext = error.validationContext
 			? `${error.validationContext} `
 			: "";
-		return reply.status(400).send({
+		return reply.status(HttpStatus.BAD_REQUEST).send({
 			statusCode: error.statusCode,
 			message: `Invalid request ${validationContext}input`,
+			timestamp: new Date(),
+		});
+	}
+
+	if (isJwtError(error)) {
+		if (error.name === "TokenExpiredError")
+			return reply.status(HttpStatus.BAD_REQUEST).send({
+				statusCode: HttpStatus.BAD_REQUEST,
+				message: "Expired token.",
+				timestamp: new Date(),
+			});
+		if (error.name === "JsonWebTokenError")
+			return reply.status(HttpStatus.BAD_REQUEST).send({
+				statusCode: HttpStatus.BAD_REQUEST,
+				message: "Invalid token.",
+				timestamp: new Date(),
+			});
+
+		return reply.status(HttpStatus.BAD_REQUEST).send({
+			statusCode: HttpStatus.BAD_REQUEST,
+			message: "Access denied.",
 			timestamp: new Date(),
 		});
 	}
@@ -36,7 +61,7 @@ export const errorHandler = (
 			return error.message;
 		});
 
-		return reply.status(400).send({
+		return reply.status(HttpStatus.BAD_REQUEST).send({
 			statusCode: 400,
 			message,
 			timestamp: new Date(),
