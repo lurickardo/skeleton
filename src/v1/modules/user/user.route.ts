@@ -1,63 +1,37 @@
 import { userController } from "./user.controller";
-import { userMiddleware } from "./user.middleware";
 import { userSchema } from "./user.schema";
 
-const findById = {
-	method: "GET",
-	url: "/v1/user/:id",
-	schema: {
-		tags: ["v1"],
-		summary: "Find data of user by id",
-		...userSchema.findById,
-	},
-	preHandler: userMiddleware.findById,
-	handler: userController.findById,
-	apisSorter: "alpha",
-	operationsSorter: "method",
-};
-
-const listAll = {
-	method: "GET",
-	url: "/v1/user",
-	schema: {
-		tags: ["v1"],
-		summary: "Find data of all users",
-		...userSchema.listAll,
-	},
-	handler: userController.listAll,
-};
-
-const create = {
+const login = {
 	method: "POST",
-	url: "/v1/user",
+	url: "/v1/user/login",
 	schema: {
 		tags: ["v1"],
-		summary: "Create user",
-		...userSchema.create,
+		summary: "Login user.",
+		...userSchema.login,
 	},
-	handler: userController.create,
+	handler: userController.login,
 };
 
-const update = {
-	method: "PUT",
-	url: "/v1/user/:id",
+const validate = {
+	method: "GET",
+	url: "/v1/user/validate",
 	schema: {
 		tags: ["v1"],
-		summary: "Update user",
-		...userSchema.update,
+		summary: "Validate user token.",
+		...userSchema.validate,
 	},
-	handler: userController.update,
+	handler: userController.validate,
 };
 
-const remove = {
-	method: "DELETE",
-	url: "/v1/user/:id",
+const logout = {
+	method: "GET",
+	url: "/v1/user/logout",
 	schema: {
 		tags: ["v1"],
-		summary: "Remove user",
-		...userSchema.remove,
+		summary: "Logout user.",
+		...userSchema.logout,
 	},
-	handler: userController.remove,
+	handler: userController.logout,
 };
 
-export const userRouteV1 = [findById, listAll, create, update, remove];
+export const userRouteV1 = [login, validate, logout];

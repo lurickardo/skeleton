@@ -1,4 +1,4 @@
-import { FastifyInstance, RouteOptions } from "fastify";
+import { FastifyInstance } from "fastify";
 import { userRouteV1 } from "./v1/modules/user/user.route";
 
 const registerRoutes = (server: FastifyInstance, routes: any[]): void => {

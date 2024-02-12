@@ -1,69 +1,40 @@
-import * as HttpStatus from "http-status";
-import { httpException } from "../../../../src/config/error";
-import { CreateUserDto } from "./dto";
+import * as jwt from "jsonwebtoken";
+import { getToken } from "../../../../src/utils";
+import { env } from "../../../config";
+import { httpException } from "../../../config/error";
+import { LoginUserDto } from "./dto";
 
+// TODO:
+// - Add tests to funcions
 export const userService = {
-	findById: async (id: string) => {
+	login: async (loginUserDto: LoginUserDto) => {
 		try {
-			if (!id) throw httpException("Id user not found.", HttpStatus.NOT_FOUND);
-			return {
-				_id: id,
-				name: "Jhon Doe",
-				email: "jhondoe@gmail.com",
-			};
+			return {};
 		} catch (error) {
 			throw error;
 		}
 	},
 
-	listAll: async () => {
-		return [
-			{
-				_id: String(Math.floor(Math.random() * 1000)),
-				name: "Jhon Doe",
-				email: "jhondoe@gmail.com",
-			},
-			{
-				_id: String(Math.floor(Math.random() * 1000)),
-				name: "Foo Bar",
-				email: "foobar@gmail.com",
-			},
-		];
-	},
-
-	create: async (createUserDto: CreateUserDto) => {
+	validate: async (authorization: string) => {
 		try {
-			if (!createUserDto)
-				throw httpException("User data was not sent.", HttpStatus.BAD_REQUEST);
-			return {
-				_id: String(Math.floor(Math.random() * 100)),
-				name: createUserDto.name,
-				email: createUserDto.email,
-			};
-		} catch (error) {
-			throw error;
+			const token = getToken(authorization);
+			//TODO:
+			// - validate if token not has expired
+			// - validate if token not has in logout table
+
+			jwt.verify(token, env.jwt.secret);
+			return { message: "Authenticated." };
+		} catch (err) {
+			throw httpException("Access denied.", 401);
 		}
 	},
 
-	update: async (id: string, createUserDto: CreateUserDto) => {
+	logout: async (authorization: string) => {
 		try {
-			if (!id) throw httpException("Id user not found.", HttpStatus.NOT_FOUND);
-			if (!createUserDto)
-				throw httpException("User data was not sent.", HttpStatus.BAD_REQUEST);
-			return {
-				_id: id,
-				name: createUserDto.name,
-				email: createUserDto.email,
-			};
-		} catch (error) {
-			throw error;
-		}
-	},
-
-	remove: async (id: string) => {
-		try {
-			if (!id) throw httpException("Id user not found.", HttpStatus.NOT_FOUND);
-			return { message: "User successfully removed" };
+			const token = getToken(authorization);
+			//TODO:
+			// - Register token to table logout of db
+			return { message: "User has been logged out." };
 		} catch (error) {
 			throw error;
 		}

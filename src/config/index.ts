@@ -5,6 +5,7 @@ type Env = {
 	plugins: { swagger: { basePath: string } };
 	stripPrefix: { path: string };
 	database: { name: string; url: string };
+	jwt: { secret: string };
 };
 
 export const env = Object.freeze({
@@ -25,5 +26,8 @@ export const env = Object.freeze({
 	database: {
 		name: process.env.DB_NAME,
 		url: process.env.DB_URL,
+	},
+	jwt: {
+		secret: process.env.JWT_SECRET,
 	},
 } as Env);
