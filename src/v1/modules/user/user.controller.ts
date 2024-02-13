@@ -2,8 +2,6 @@ import { FastifyReply, FastifyRequest } from "fastify";
 import { transformLoginUserDto } from "./dto";
 import { userService } from "./user.service";
 
-// TODO:
-// - Add tests to routes
 export const userController = {
 	login: async ({ body }: FastifyRequest, reply: FastifyReply) => {
 		return reply
