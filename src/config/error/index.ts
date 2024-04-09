@@ -2,7 +2,10 @@ import { FastifyReply, FastifyRequest } from "fastify";
 import * as HttpStatus from "http-status";
 
 const isFastifyError = (error: any): boolean => {
-	return error.code || (error.statusCode && !error.message);
+	return (
+		error.code < 600 ||
+		(error.statusCode && error.statusCode === 400 && !error.message)
+	);
 };
 
 const isZodError = (error: any): boolean => {
@@ -32,8 +35,8 @@ export const errorHandler = (
 	}
 
 	if (isZodError(error)) {
-		const message = error.issues.map((error) => {
-			return error.message;
+		const message = error.issues.map((issue) => {
+			return `${issue.path[0]}: ${issue.message}`;
 		});
 
 		return reply.status(400).send({
@@ -52,7 +55,9 @@ export const errorHandler = (
 	}
 
 	process.stdout.write(
-		`\n \x1b[41m--- UNEXPECTED ERROR --- \x1b[0m\n ${error}\n \x1b[41m--- END UNEXPECTED ERROR --- \x1b[0m\n`,
+		`\n\n\x1b[41m--- UNEXPECTED ERROR --- \x1b[0m\n ${
+			Object.keys(error).length ? JSON.stringify(error) : genericError
+		}\n\x1b[41m--- END UNEXPECTED ERROR --- \x1b[0m\n\n\n`,
 	);
 	return reply.status(HttpStatus.INTERNAL_SERVER_ERROR).send({
 		statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
@@ -61,6 +66,9 @@ export const errorHandler = (
 	});
 };
 
-export const httpException = (message: string, statusCode: number) => {
+export const httpException = (
+	message: string | string[],
+	statusCode: number,
+) => {
 	return { message, statusCode };
 };
