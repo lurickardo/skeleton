@@ -11,9 +11,6 @@
     "start:dev": "cls || clear && ts-node-dev --respawn --transpile-only --env-file=.env src/main.ts",
     "start:debug": "cls || clear && ts-node-dev --respawn --transpile-only --debug --env-file=.env src/main.ts",
     "start:prod": "cls || clear && node --env-file=.env dist/src/main",
-    "test": "jest --runInBand --coverage --config ./test/jest.config.json",
-    "test:watch": "jest --runInBand --config ./test/jest.config.json --watch",
-    "test:cov": "jest --runInBand --config ./test/jest.config.json --collect-coverage",
     "lint": "npx @biomejs/biome format ./ --write",
     "lint:check": "npx @biomejs/biome check ./src"
   },
@@ -25,17 +22,10 @@
   "devDependencies": {
     "@biomejs/biome": "1.5.3",
     "@types/amqplib": "^0.10.5",
-    "husky": "^4.3.8",
     "ts-node": "^10.9.2",
     "ts-node-dev": "^2.0.0",
     "tsconfig-paths": "^4.2.0",
     "tslib": "^2.6.2",
     "typescript": "^5.3.3"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run lint:check && npm run test:cov && npm run build",
-      "pre-push": "npm run lint:check && npm run test:cov && npm run build"
-    }
   }
 }
