@@ -1,12 +1,21 @@
-import { FastifyInstance, RouteOptions } from "fastify";
-import { userRouteV1 } from "./v1/modules/user/user.route";
+import { Channel } from "amqplib";
+import { notificationQueues } from "./v1/modules/notification/notification.queue";
+import { env } from "./config";
 
-const registerRoutes = (server: FastifyInstance, routes: any[]): void => {
-	routes.forEach((route) => {
-		server.route(route);
+const bindQueues = (channel: Channel, queues: Queue[]) => {
+	queues.forEach(async (queue) => {
+		await channel.assertQueue(queue.name, queue.options);
+		await channel.bindQueue(queue.name, env.channel.exchange.name, "");
+		channel.consume(
+			queue.name,
+			(message: any) => {
+				queue.service(queue.validate(message));
+			},
+			{ noAck: true },
+		);
 	});
 };
 
-export const routes = async (server: FastifyInstance): Promise<void> => {
-	registerRoutes(server, [...userRouteV1]);
+export const queues = async (channel: Channel): Promise<void> => {
+	bindQueues(channel, [...notificationQueues]);
 };

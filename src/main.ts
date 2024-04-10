@@ -1,25 +1,25 @@
-import fastify, { FastifyInstance } from "fastify";
-import { routes } from "./app.module";
+import { queues } from "./app.module";
 import { clusterize } from "./clusterize";
 import { env } from "./config";
 import { errorHandler } from "./config/error";
-import { registerPlugins } from "./plugins";
-
-const server: FastifyInstance = fastify({
-	logger: true,
-});
+import * as amqp from "amqplib";
 
 async function bootstrap(): Promise<void> {
 	try {
-		server.setErrorHandler((error, request, reply) =>
-			errorHandler(error, request, reply),
+		const connection = await amqp.connect(env.app.amqpUrl);
+		const channel = await connection.createChannel();
+
+		await channel.assertExchange(
+			env.channel.exchange.name,
+			env.channel.exchange.type,
+			{ durable: true },
 		);
-		registerPlugins(server, env);
-		server.register(routes, { prefix: env.stripPrefix.path });
-		await server.listen({ port: env.app.port || 3000, host: "::" });
+		process.stdout.write(
+			`[*] awaiting messages at exchange ${env.channel.exchange.name}...\n`,
+		);
+		await queues(channel);
 	} catch (error) {
-		server.log.error(error);
-		process.exit(1);
+		errorHandler(error);
 	}
 }
 
