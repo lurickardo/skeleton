@@ -1,6 +1,6 @@
-type Queue = {
+export type Queue = {
 	name: string;
-	service: (message: any) => Promise<void>;
+	service: (genericDto: any) => void | Promise<void>;
 	validate: (data: any) => any;
 	options?: Options.AssertQueue;
 };

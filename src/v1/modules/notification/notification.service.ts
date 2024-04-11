@@ -1,18 +1,11 @@
-import { exception } from "../../../../src/config/error";
+import { SendNotificationsDto } from "./dto/sendNotifications.dto";
+import { SendNotificationDto } from "./dto/sendNotification.dto";
 
 export const notificationService = {
-	sendNotification: async (message: any) => {
-		try {
-			console.log("sendNotification");
-		} catch (error) {
-			throw error;
-		}
+	sendNotification: async (sendNotificationDto: SendNotificationDto) => {
+		console.info(sendNotificationDto);
 	},
-	sendNotifications: async (message: any) => {
-		try {
-			console.log("sendNotificationsssssss");
-		} catch (error) {
-			throw error;
-		}
+	sendNotifications: async (sendNotificationsDto: SendNotificationsDto) => {
+		console.info(sendNotificationsDto);
 	},
 };

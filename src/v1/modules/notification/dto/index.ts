@@ -1,2 +1,2 @@
-export * from "./sendNotifications.dto";
 export * from "./sendNotification.dto";
+export * from "./sendNotifications.dto";
