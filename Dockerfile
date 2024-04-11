@@ -13,7 +13,7 @@ ENV RABBITMQ_DEFAULT_PASS=guest
 
 # ENV RABBITMQ_CONFIG_FILE /path/to/custom/rabbitmq.conf
 
-CMD ["server-rabbitmq"]
+CMD ["rabbitmq-server"]
 
 # Util commands
 # docker build -t server-rabbitmq .
