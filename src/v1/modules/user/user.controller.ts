@@ -1,29 +1,46 @@
-import { FastifyReply, FastifyRequest } from "fastify";
+import { FastifyReply, FastifyRequest, RouteHandlerMethod } from "fastify";
 import { transformCreateUserDto, transformUpdateUserDto } from "./dto";
-import { userService } from "./user.service";
+import { UserService } from "./user.service";
 
-export const userController = {
-	findById: async ({ params: { id } }, reply: FastifyReply) => {
-		return reply.code(200).send(await userService.findById(id));
-	},
+export class UserController {
+	private userService = new UserService();
 
-	listAll: async (request: Request, reply: FastifyReply) => {
-		return reply.code(200).send(await userService.listAll());
-	},
+	public async findById(
+		{ params: { id } },
+		reply: FastifyReply,
+	): Promise<RouteHandlerMethod> {
+		return reply.code(200).send(await this.userService.findById(id));
+	}
 
-	create: async ({ body }: FastifyRequest, reply: FastifyReply) => {
+	public async listAll(
+		request: FastifyRequest,
+		reply: FastifyReply,
+	): Promise<RouteHandlerMethod> {
+		return reply.code(200).send(await this.userService.listAll());
+	}
+
+	public async create(
+		{ body }: FastifyRequest,
+		reply: FastifyReply,
+	): Promise<RouteHandlerMethod> {
 		return reply
 			.code(201)
-			.send(await userService.create(transformCreateUserDto(body)));
-	},
+			.send(await this.userService.create(transformCreateUserDto(body)));
+	}
 
-	update: async ({ params: { id }, body }, reply: FastifyReply) => {
+	public async update(
+		{ params: { id }, body },
+		reply: FastifyReply,
+	): Promise<RouteHandlerMethod> {
 		return reply
 			.code(200)
-			.send(await userService.update(id, transformUpdateUserDto(body)));
-	},
+			.send(await this.userService.update(id, transformUpdateUserDto(body)));
+	}
 
-	remove: async ({ params: { id } }, reply: FastifyReply) => {
-		return reply.code(200).send(await userService.remove(id));
-	},
-};
+	public async remove(
+		{ params: { id } },
+		reply: FastifyReply,
+	): Promise<RouteHandlerMethod> {
+		return reply.code(200).send(await this.userService.remove(id));
+	}
+}

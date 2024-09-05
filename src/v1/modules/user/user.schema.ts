@@ -1,5 +1,7 @@
-export const userSchema = {
-	findById: {
+import { FastifySchema } from "fastify";
+
+export class UserSchema {
+	public findById: FastifySchema = {
 		params: {
 			type: "object",
 			properties: {
@@ -16,8 +18,9 @@ export const userSchema = {
 			},
 			additionalProperties: true,
 		},
-	},
-	listAll: {
+	};
+
+	public listAll: FastifySchema = {
 		params: {
 			type: "object",
 			properties: {},
@@ -28,8 +31,9 @@ export const userSchema = {
 			properties: {},
 			additionalProperties: true,
 		},
-	},
-	create: {
+	};
+
+	public create: FastifySchema = {
 		body: {
 			type: "object",
 			properties: {
@@ -42,8 +46,9 @@ export const userSchema = {
 			},
 			required: ["name", "email"],
 		},
-	},
-	update: {
+	};
+
+	public update: FastifySchema = {
 		params: {
 			type: "object",
 			properties: {
@@ -65,8 +70,9 @@ export const userSchema = {
 			},
 			required: ["name", "email"],
 		},
-	},
-	remove: {
+	};
+
+	public remove: FastifySchema = {
 		params: {
 			type: "object",
 			properties: {
@@ -81,5 +87,5 @@ export const userSchema = {
 			properties: {},
 			additionalProperties: true,
 		},
-	},
-};
+	};
+}
