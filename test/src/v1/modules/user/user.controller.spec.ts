@@ -1,7 +1,7 @@
-import { userController } from "./user.controller";
-import { userService } from "./user.service";
+import { UserService } from "./../../../../../src/v1/modules/user/user.service";
+import { UserController } from "./../../../../../src/v1/modules/user/user.controller";
 
-jest.mock("./user.service");
+jest.mock("./../../../../../src/v1/modules/user/user.service");
 
 describe("Unit tests for user controller", () => {
 	afterEach(() => {
@@ -10,6 +10,9 @@ describe("Unit tests for user controller", () => {
 
 	describe("findById", () => {
 		it("should return a user with status 200 if found user", async () => {
+			const userService = new UserService();
+			const userController = new UserController();
+
 			const userId = "123";
 			const userMock = { id: userId, name: "John Doe" };
 			(userService.findById as jest.Mock).mockResolvedValue(userMock);
@@ -27,6 +30,9 @@ describe("Unit tests for user controller", () => {
 
 		it("should return a 404 status if the user is not found", async () => {
 			try {
+				const userService = new UserService();
+				const userController = new UserController();
+
 				const userId: any = null;
 				(userService.findById as jest.Mock).mockResolvedValue(null);
 
@@ -45,6 +51,9 @@ describe("Unit tests for user controller", () => {
 
 	describe("create", () => {
 		it("must create a user and return status 201", async () => {
+			const userService = new UserService();
+			const userController = new UserController();
+
 			const userDtoMock = { name: "John Doe", email: "john@example.com" };
 			const createdUserMock = { id: "123", ...userDtoMock };
 			(userService.create as jest.Mock).mockResolvedValue(createdUserMock);
@@ -66,6 +75,9 @@ describe("Unit tests for user controller", () => {
 
 	describe("listAll", () => {
 		it("should return a list of users with status 200", async () => {
+			const userService = new UserService();
+			const userController = new UserController();
+
 			const userListMock = [
 				{ id: "1", name: "John Doe", email: "john@example.com" },
 				{ id: "2", name: "Jane Doe", email: "jane@example.com" },
@@ -88,6 +100,9 @@ describe("Unit tests for user controller", () => {
 
 	describe("update", () => {
 		it("should update a user and return status 200", async () => {
+			const userService = new UserService();
+			const userController = new UserController();
+
 			const userId = "123";
 			const updatedUserDtoMock = {
 				name: "Updated Name",
@@ -116,6 +131,9 @@ describe("Unit tests for user controller", () => {
 
 		it("should return a 404 status if the user is not found", async () => {
 			try {
+				const userService = new UserService();
+				const userController = new UserController();
+
 				const userId: any = null;
 				const updatedUserDtoMock = {
 					name: "Updated Name",
@@ -141,6 +159,9 @@ describe("Unit tests for user controller", () => {
 
 	describe("remove", () => {
 		it("should remove a user and return status 200", async () => {
+			const userService = new UserService();
+			const userController = new UserController();
+
 			const userId = "123";
 			(userService.remove as jest.Mock).mockResolvedValue({
 				message: "User successfully removed",
@@ -164,6 +185,9 @@ describe("Unit tests for user controller", () => {
 
 		it("should return a 404 status if the user is not found", async () => {
 			try {
+				const userService = new UserService();
+				const userController = new UserController();
+
 				const userId: any = null;
 				(userService.remove as jest.Mock).mockResolvedValue(null);
 
