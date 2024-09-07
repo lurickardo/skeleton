@@ -1,7 +1,7 @@
 import * as HttpStatus from "http-status";
 import { httpException } from "../../../../src/config/error";
-import type { CreateUserDto } from "./dto";
 import { Logger } from "../../../config/logger/logger.decorator";
+import type { CreateUserDto } from "./dto";
 
 export class UserService {
 	@Logger.Log

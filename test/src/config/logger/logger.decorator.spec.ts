@@ -16,6 +16,7 @@ describe("Logger", () => {
 	describe("Log decorator", () => {
 		it("should log method call and result", async () => {
 			class TestClass {
+				// @ts-ignore: bug of decorators in typescript
 				@Logger.Log
 				public async testMethod(name: string): Promise<string> {
 					return `Hello, ${name}`;
@@ -36,6 +37,7 @@ describe("Logger", () => {
 
 		it("should log an error when the method throws", async () => {
 			class TestClass {
+				// @ts-ignore: bug of decorators in typescript
 				@Logger.Log
 				public async testMethod() {
 					throw new Error("Test error");
