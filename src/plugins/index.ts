@@ -1,4 +1,4 @@
-import { FastifyInstance } from "fastify";
+import type { FastifyInstance } from "fastify";
 import { env } from "../config";
 import { cors } from "./fastify-cors";
 import { healthcheck } from "./fastify-healthcheck";
@@ -11,5 +11,7 @@ const plugins =
 		: [swagger, cors, healthcheck, schemaCompiler];
 
 export const registerPlugins = (server: FastifyInstance, config: any) => {
-	plugins.forEach((plugin) => plugin(server, config));
+	for (const plugin of plugins) {
+		plugin(server, config);
+	}
 };

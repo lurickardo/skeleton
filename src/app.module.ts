@@ -1,12 +1,10 @@
-import { FastifyInstance, RouteOptions } from "fastify";
-import { userRouteV1 } from "./v1/modules/user/user.route";
+import type { FastifyInstance } from "fastify";
+import { UserRouteV1 } from "./v1/modules/user/user.route";
 
-const registerRoutes = (server: FastifyInstance, routes: any[]): void => {
-	routes.forEach((route) => {
-		server.route(route);
-	});
-};
-
-export const routes = async (server: FastifyInstance): Promise<void> => {
-	registerRoutes(server, [...userRouteV1]);
-};
+export class Route {
+	public registerRoutes = async (server: FastifyInstance): Promise<void> => {
+		for (const route of [...new UserRouteV1().routes()]) {
+			server.route(route);
+		}
+	};
+}
