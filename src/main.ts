@@ -1,4 +1,4 @@
-import fastify, { FastifyInstance } from "fastify";
+import fastify, { type FastifyInstance } from "fastify";
 import { Route } from "./app.module";
 import { clusterize } from "./clusterize";
 import { env } from "./config";
@@ -11,6 +11,7 @@ const server: FastifyInstance = fastify({
 
 async function bootstrap(): Promise<void> {
 	try {
+		process.stdout.write("\x1Bc\n\x1b[32mStarting server...\x1b[0m\n");
 		server.setErrorHandler((error, request, reply) =>
 			errorHandler(error, request, reply),
 		);

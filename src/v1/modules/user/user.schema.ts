@@ -1,4 +1,4 @@
-import { FastifySchema } from "fastify";
+import type { FastifySchema } from "fastify";
 
 export class UserSchema {
 	public findById: FastifySchema = {

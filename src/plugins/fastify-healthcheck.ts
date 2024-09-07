@@ -1,5 +1,7 @@
-import underPressure, { UnderPressureOptions } from "@fastify/under-pressure";
-import { FastifyInstance } from "fastify";
+import underPressure, {
+	type UnderPressureOptions,
+} from "@fastify/under-pressure";
+import type { FastifyInstance } from "fastify";
 
 export const healthcheck = (fastify: FastifyInstance, config) => {
 	fastify.register(underPressure, {

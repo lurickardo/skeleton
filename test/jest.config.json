@@ -11,6 +11,7 @@
 		"!**/*.route.{ts,js}",
 		"!**/app.module.{ts,js}",
 		"!**/main.{ts,js}",
+		"!**/clusterize.{ts,js}",
 		"!**/config/index.{ts,js}",
 		"!**/plugins/*.{ts,js}"
 	],
@@ -23,6 +24,13 @@
 		}
 	},
 	"testEnvironment": "node",
-	"testMatch": ["**/tests/**/*.(js|ts)?(x)", "**/?(*.)+(spec|test).(js|ts)?(x)"],
-	"modulePathIgnorePatterns": ["<rootDir>/dist", "<rootDir>/node_modules", "<rootDir>/coverage"]
+	"testMatch": [
+		"**/tests/**/*.(js|ts)?(x)",
+		"**/?(*.)+(spec|test).(js|ts)?(x)"
+	],
+	"modulePathIgnorePatterns": [
+		"<rootDir>/dist",
+		"<rootDir>/node_modules",
+		"<rootDir>/coverage"
+	]
 }

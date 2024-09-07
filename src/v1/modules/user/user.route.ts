@@ -1,14 +1,20 @@
-import { RouteHandlerMethod, RouteOptions } from "fastify";
+import type { RouteHandlerMethod, RouteOptions } from "fastify";
 import { UserController } from "./user.controller";
 import { UserMiddleware } from "./user.middleware";
 import { UserSchema } from "./user.schema";
 
 export class UserRouteV1 {
-	private userController = new UserController();
-	private userMiddleware = new UserMiddleware();
-	private userSchema = new UserSchema();
+	private userController: UserController;
+	private userMiddleware: UserMiddleware;
+	private userSchema: UserSchema;
 
-	private findById(): RouteOptions {
+	constructor() {
+		this.userController = new UserController();
+		this.userMiddleware = new UserMiddleware();
+		this.userSchema = new UserSchema();
+	}
+
+	private findById = (): RouteOptions => {
 		return {
 			method: "GET",
 			url: "/v1/user/:id",
@@ -20,9 +26,9 @@ export class UserRouteV1 {
 			preHandler: this.userMiddleware.findById,
 			handler: this.userController.findById as RouteHandlerMethod,
 		};
-	}
+	};
 
-	private listAll(): RouteOptions {
+	private listAll = (): RouteOptions => {
 		return {
 			method: "GET",
 			url: "/v1/user",
@@ -33,9 +39,9 @@ export class UserRouteV1 {
 			},
 			handler: this.userController.listAll as RouteHandlerMethod,
 		};
-	}
+	};
 
-	private create(): RouteOptions {
+	private create = (): RouteOptions => {
 		return {
 			method: "POST",
 			url: "/v1/user",
@@ -46,9 +52,9 @@ export class UserRouteV1 {
 			},
 			handler: this.userController.create as RouteHandlerMethod,
 		};
-	}
+	};
 
-	private update(): RouteOptions {
+	private update = (): RouteOptions => {
 		return {
 			method: "PUT",
 			url: "/v1/user/:id",
@@ -59,9 +65,9 @@ export class UserRouteV1 {
 			},
 			handler: this.userController.update as RouteHandlerMethod,
 		};
-	}
+	};
 
-	private remove(): RouteOptions {
+	private remove = (): RouteOptions => {
 		return {
 			method: "DELETE",
 			url: "/v1/user/:id",
@@ -72,9 +78,9 @@ export class UserRouteV1 {
 			},
 			handler: this.userController.remove as RouteHandlerMethod,
 		};
-	}
+	};
 
-	public routes(): RouteOptions[] {
+	public routes = (): RouteOptions[] => {
 		return [
 			this.findById(),
 			this.listAll(),
@@ -82,5 +88,5 @@ export class UserRouteV1 {
 			this.update(),
 			this.remove(),
 		];
-	}
+	};
 }

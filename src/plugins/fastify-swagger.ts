@@ -1,15 +1,22 @@
 import fastifySwagger from "@fastify/swagger";
-import fastifySwaggerUi from "@fastify/swagger-ui";
-import { FastifyInstance } from "fastify";
-import { description, name, version } from "../../package.json";
+import swaggerScalar from "@scalar/fastify-api-reference";
+import type { FastifyInstance } from "fastify";
+import * as application from "../../package.json";
 
 export const swagger = async (fastify: FastifyInstance, config: any) => {
 	await fastify.register(fastifySwagger, {
 		swagger: {
 			info: {
-				title: name,
-				description,
-				version,
+				title: application.name,
+				version: application.version,
+				description: application.description,
+				contact: {
+					name: application.author,
+					email: application.email,
+				},
+				license: {
+					name: application.license,
+				},
 			},
 			schemes: ["http"],
 			consumes: ["application/json"],
@@ -21,32 +28,12 @@ export const swagger = async (fastify: FastifyInstance, config: any) => {
 		},
 	});
 
-	await fastify.register(fastifySwaggerUi, {
+	await fastify.register(swaggerScalar, {
 		routePrefix: `${config.stripPrefix.path}/docs`,
-		initOAuth: {},
-		uiConfig: {
-			docExpansion: "list",
-			deepLinking: false,
-			operationsSorter: (a: any, b: any) => {
-				const order = {
-					get: "0",
-					post: "1",
-					put: "2",
-					patch: "3",
-					delete: "4",
-				};
-				return order[a.get("method")].localeCompare(order[b.get("method")]);
-			},
+		configuration: {
+			theme: "bluePlanet",
+			layout: "classic",
+			darkMode: true,
 		},
-		uiHooks: {
-			onRequest(request, reply, next) {
-				next();
-			},
-			preHandler(request, reply, next) {
-				next();
-			},
-		},
-		staticCSP: true,
-		transformStaticCSP: (header) => header,
 	});
 };

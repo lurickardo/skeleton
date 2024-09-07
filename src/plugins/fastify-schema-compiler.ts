@@ -1,5 +1,5 @@
 import Ajv from "ajv";
-import { FastifyInstance } from "fastify";
+import type { FastifyInstance } from "fastify";
 
 const ajvInstance = new Ajv({
 	removeAdditional: true,

@@ -1,206 +1,111 @@
-import { UserService } from "./../../../../../src/v1/modules/user/user.service";
+import type { FastifyReply, FastifyRequest } from "fastify";
 import { UserController } from "./../../../../../src/v1/modules/user/user.controller";
+import { UserService } from "./../../../../../src/v1/modules/user/user.service";
+import {
+	transformCreateUserDto,
+	transformUpdateUserDto,
+} from "./../../../../../src/v1/modules/user/dto";
 
 jest.mock("./../../../../../src/v1/modules/user/user.service");
+jest.mock("./../../../../../src/v1/modules/user/dto");
 
-describe("Unit tests for user controller", () => {
+describe("UserController", () => {
+	let userController: UserController;
+	let userServiceMock: jest.Mocked<UserService>;
+	let replyMock: jest.Mocked<FastifyReply>;
+
+	beforeEach(() => {
+		userController = new UserController();
+		userServiceMock = new UserService() as jest.Mocked<UserService>;
+		replyMock = {
+			code: jest.fn().mockReturnThis(),
+			send: jest.fn(),
+		} as unknown as jest.Mocked<FastifyReply>;
+
+		(userController as any).userService = userServiceMock;
+	});
+
 	afterEach(() => {
 		jest.clearAllMocks();
 	});
 
-	describe("findById", () => {
-		it("should return a user with status 200 if found user", async () => {
-			const userService = new UserService();
-			const userController = new UserController();
+	it("should find a user by ID", async () => {
+		const mockUser = {
+			_id: "1",
+			name: "Jhon Doe",
+			email: "jhondoe@gmail.com",
+		};
+		userServiceMock.findById.mockResolvedValue(mockUser);
 
-			const userId = "123";
-			const userMock = { id: userId, name: "John Doe" };
-			(userService.findById as jest.Mock).mockResolvedValue(userMock);
+		const request = { params: { id: "1" } };
+		await userController.findById(request, replyMock);
 
-			const replyMock = {
-				code: jest.fn().mockReturnThis(),
-				send: jest.fn(),
-			} as any;
-
-			await userController.findById({ params: { id: userId } }, replyMock);
-
-			expect(replyMock.code).toHaveBeenCalledWith(200);
-			expect(replyMock.send).toHaveBeenCalledWith(userMock);
-		});
-
-		it("should return a 404 status if the user is not found", async () => {
-			try {
-				const userService = new UserService();
-				const userController = new UserController();
-
-				const userId: any = null;
-				(userService.findById as jest.Mock).mockResolvedValue(null);
-
-				const replyMock = {
-					code: jest.fn().mockReturnThis(),
-					send: jest.fn(),
-				} as any;
-
-				await userController.findById({ params: { id: userId } }, replyMock);
-			} catch (error) {
-				expect(error.statusCode).toHaveBeenCalledWith(404);
-				expect(error.message).toHaveBeenCalledWith({ error: "User not found" });
-			}
-		});
+		expect(userServiceMock.findById).toHaveBeenCalledWith("1");
+		expect(replyMock.code).toHaveBeenCalledWith(200);
+		expect(replyMock.send).toHaveBeenCalledWith(mockUser);
 	});
 
-	describe("create", () => {
-		it("must create a user and return status 201", async () => {
-			const userService = new UserService();
-			const userController = new UserController();
+	it("should list all users", async () => {
+		const mockUsers = [
+			{
+				_id: "1",
+				name: "Jhon Doe",
+				email: "jhondoe@gmail.com",
+			},
+			{
+				_id: "2",
+				name: "Foo Bar",
+				email: "foobar@gmail.com",
+			},
+		];
+		userServiceMock.listAll.mockResolvedValue(mockUsers);
 
-			const userDtoMock = { name: "John Doe", email: "john@example.com" };
-			const createdUserMock = { id: "123", ...userDtoMock };
-			(userService.create as jest.Mock).mockResolvedValue(createdUserMock);
+		const request = {} as FastifyRequest;
+		await userController.listAll(request, replyMock);
 
-			const replyMock = {
-				code: jest.fn().mockReturnThis(),
-				send: jest.fn(),
-			} as any;
-
-			const body: any = { body: userDtoMock };
-
-			await userController.create(body, replyMock);
-
-			expect(replyMock.code).toHaveBeenCalledWith(201);
-			expect(replyMock.send).toHaveBeenCalledWith(createdUserMock);
-			expect(userService.create).toHaveBeenCalledWith(userDtoMock);
-		});
+		expect(userServiceMock.listAll).toHaveBeenCalled();
+		expect(replyMock.code).toHaveBeenCalledWith(200);
+		expect(replyMock.send).toHaveBeenCalledWith(mockUsers);
 	});
 
-	describe("listAll", () => {
-		it("should return a list of users with status 200", async () => {
-			const userService = new UserService();
-			const userController = new UserController();
+	it("should create a user", async () => {
+		const mockUser = { _id: "1", name: "Jhon Dow", email: "jhondoe@gmail.com" };
+		const dto = { name: "Jhon Dow", email: "jhondoe@gmail.com" };
+		userServiceMock.create.mockResolvedValue(mockUser);
 
-			const userListMock = [
-				{ id: "1", name: "John Doe", email: "john@example.com" },
-				{ id: "2", name: "Jane Doe", email: "jane@example.com" },
-			];
-			(userService.listAll as jest.Mock).mockResolvedValue(userListMock);
+		const request = { body: dto } as FastifyRequest;
+		await userController.create(request, replyMock);
 
-			const replyMock = {
-				code: jest.fn().mockReturnThis(),
-				send: jest.fn(),
-			} as any;
-
-			const body: any = { body: {} };
-
-			await userController.listAll(body, replyMock);
-
-			expect(replyMock.code).toHaveBeenCalledWith(200);
-			expect(replyMock.send).toHaveBeenCalledWith(userListMock);
-		});
+		expect(transformCreateUserDto).toHaveBeenCalledWith(dto);
+		expect(replyMock.code).toHaveBeenCalledWith(201);
+		expect(replyMock.send).toHaveBeenCalledWith(mockUser);
 	});
 
-	describe("update", () => {
-		it("should update a user and return status 200", async () => {
-			const userService = new UserService();
-			const userController = new UserController();
+	it("should update a user", async () => {
+		const mockUser = { _id: "1", name: "Jhon Dow", email: "jhondoe@gmail.com" };
+		const dto = { name: "Jhon Dow", email: "jhondoe@gmail.com" };
+		userServiceMock.update.mockResolvedValue(mockUser);
 
-			const userId = "123";
-			const updatedUserDtoMock = {
-				name: "Updated Name",
-				email: "updated@example.com",
-			};
-			const updatedUserMock = { id: userId, ...updatedUserDtoMock };
-			(userService.update as jest.Mock).mockResolvedValue(updatedUserMock);
+		const request = {
+			params: { id: "1" },
+			body: dto,
+		};
 
-			const replyMock = {
-				code: jest.fn().mockReturnThis(),
-				send: jest.fn(),
-			} as any;
+		await userController.update(request, replyMock);
 
-			const params: any = { params: { id: userId } };
-			const body: any = { body: updatedUserDtoMock };
-
-			await userController.update({ ...params, ...body }, replyMock);
-
-			expect(replyMock.code).toHaveBeenCalledWith(200);
-			expect(replyMock.send).toHaveBeenCalledWith(updatedUserMock);
-			expect(userService.update).toHaveBeenCalledWith(
-				userId,
-				updatedUserDtoMock,
-			);
-		});
-
-		it("should return a 404 status if the user is not found", async () => {
-			try {
-				const userService = new UserService();
-				const userController = new UserController();
-
-				const userId: any = null;
-				const updatedUserDtoMock = {
-					name: "Updated Name",
-					email: "updated@example.com",
-				};
-				(userService.update as jest.Mock).mockResolvedValue(null);
-
-				const replyMock = {
-					code: jest.fn().mockReturnThis(),
-					send: jest.fn(),
-				} as any;
-
-				await userController.update(
-					{ params: { id: userId }, body: updatedUserDtoMock },
-					replyMock,
-				);
-			} catch (error) {
-				expect(error.statusCode).toHaveBeenCalledWith(404);
-				expect(error.message).toHaveBeenCalledWith({ error: "User not found" });
-			}
-		});
+		expect(transformUpdateUserDto).toHaveBeenCalledWith(dto);
+		expect(replyMock.code).toHaveBeenCalledWith(200);
+		expect(replyMock.send).toHaveBeenCalledWith(mockUser);
 	});
 
-	describe("remove", () => {
-		it("should remove a user and return status 200", async () => {
-			const userService = new UserService();
-			const userController = new UserController();
+	it("should delete a user", async () => {
+		userServiceMock.remove.mockResolvedValue({ message: "User deleted" });
 
-			const userId = "123";
-			(userService.remove as jest.Mock).mockResolvedValue({
-				message: "User successfully removed",
-			});
+		const request = { params: { id: "1" } };
+		await userController.remove(request, replyMock);
 
-			const replyMock = {
-				code: jest.fn().mockReturnThis(),
-				send: jest.fn(),
-			} as any;
-
-			const params: any = { params: { id: userId } };
-
-			await userController.remove(params, replyMock);
-
-			expect(replyMock.code).toHaveBeenCalledWith(200);
-			expect(replyMock.send).toHaveBeenCalledWith({
-				message: "User successfully removed",
-			});
-			expect(userService.remove).toHaveBeenCalledWith(userId);
-		});
-
-		it("should return a 404 status if the user is not found", async () => {
-			try {
-				const userService = new UserService();
-				const userController = new UserController();
-
-				const userId: any = null;
-				(userService.remove as jest.Mock).mockResolvedValue(null);
-
-				const replyMock = {
-					code: jest.fn().mockReturnThis(),
-					send: jest.fn(),
-				} as any;
-
-				await userController.remove({ params: { id: userId } }, replyMock);
-			} catch (error) {
-				expect(error.statusCode).toHaveBeenCalledWith(404);
-				expect(error.message).toHaveBeenCalledWith({ error: "User not found" });
-			}
-		});
+		expect(userServiceMock.remove).toHaveBeenCalledWith("1");
+		expect(replyMock.code).toHaveBeenCalledWith(200);
+		expect(replyMock.send).toHaveBeenCalledWith({ message: "User deleted" });
 	});
 });

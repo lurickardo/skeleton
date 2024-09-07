@@ -1,6 +1,6 @@
 import * as HttpStatus from "http-status";
 import { httpException } from "../../../../src/config/error";
-import { CreateUserDto } from "./dto";
+import type { CreateUserDto } from "./dto";
 
 export class UserService {
 	public async findById(id: string) {

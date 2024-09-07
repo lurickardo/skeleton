@@ -1,13 +1,11 @@
-import { preHandlerMetaHookHandler } from "fastify/types/hooks";
+import type { preHandlerMetaHookHandler } from "fastify/types/hooks";
 
 export class UserMiddleware {
-	public async findById(
+	public findById = async (
 		request,
 		reply,
 		done,
-	): Promise<preHandlerMetaHookHandler> {
-		console.log("UserMiddleware.findById");
-
+	): Promise<preHandlerMetaHookHandler> => {
 		return done();
-	}
+	};
 }
