@@ -1,4 +1,4 @@
-import { Logger } from "../../../../src/config/logger/logger.decorator";
+import { Log } from "../../../../src/config/logger/logger.decorator";
 
 describe("Logger", () => {
 	let stdoutSpy: jest.SpyInstance;
@@ -14,10 +14,9 @@ describe("Logger", () => {
 	});
 
 	describe("Log decorator", () => {
-		it("should log method call and result", async () => {
+		it("should log method call and result with a custom message", async () => {
 			class TestClass {
-				// @ts-ignore: bug of decorators in typescript
-				@Logger.Log
+				@Log("Calling testMethod")
 				public async testMethod(name: string): Promise<string> {
 					return `Hello, ${name}`;
 				}
@@ -27,18 +26,19 @@ describe("Logger", () => {
 			const result = await testInstance.testMethod("World");
 
 			expect(stdoutSpy).toHaveBeenCalledWith(
-				expect.stringContaining('Calling testMethod with arguments: ["World"]'),
+				expect.stringContaining(
+					'Calling testMethod testMethod with arguments: ["World"]',
+				),
 			);
 			expect(stdoutSpy).toHaveBeenCalledWith(
-				expect.stringContaining('Result: "Hello, World"'),
+				expect.stringContaining('Method: testMethod return: "Hello, World"'),
 			);
 			expect(result).toBe("Hello, World");
 		});
 
 		it("should log an error when the method throws", async () => {
 			class TestClass {
-				// @ts-ignore: bug of decorators in typescript
-				@Logger.Log
+				@Log()
 				public async testMethod() {
 					throw new Error("Test error");
 				}
@@ -49,10 +49,10 @@ describe("Logger", () => {
 			await expect(testInstance.testMethod()).rejects.toThrow("Test error");
 
 			expect(stdoutSpy).toHaveBeenCalledWith(
-				expect.stringContaining("Calling testMethod with arguments: []"),
+				expect.stringContaining("testMethod with arguments: []"),
 			);
 			expect(stdoutSpy).toHaveBeenCalledWith(
-				expect.stringContaining("Error: Error: Test error"),
+				expect.stringContaining("Method: testMethod Error: Test error"),
 			);
 		});
 	});

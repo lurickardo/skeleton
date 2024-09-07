@@ -1,13 +1,14 @@
 import * as HttpStatus from "http-status";
 import { httpException } from "../../../../src/config/error";
-import { Logger } from "../../../config/logger/logger.decorator";
+import { Log } from "../../../config/logger/logger.decorator";
 import type { CreateUserDto } from "./dto";
 
 export class UserService {
-	@Logger.Log
+	@Log()
 	public async findById(id: string) {
 		try {
 			if (!id) throw httpException("Id user not found.", HttpStatus.NOT_FOUND);
+
 			return {
 				_id: id,
 				name: "Jhon Doe",
