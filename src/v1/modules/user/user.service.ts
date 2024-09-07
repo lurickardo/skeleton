@@ -1,11 +1,14 @@
 import * as HttpStatus from "http-status";
 import { httpException } from "../../../../src/config/error";
-import { CreateUserDto } from "./dto";
+import { Log } from "../../../config/logger/logger.decorator";
+import type { CreateUserDto } from "./dto";
 
-export const userService = {
-	findById: async (id: string) => {
+export class UserService {
+	@Log()
+	public async findById(id: string) {
 		try {
 			if (!id) throw httpException("Id user not found.", HttpStatus.NOT_FOUND);
+
 			return {
 				_id: id,
 				name: "Jhon Doe",
@@ -14,9 +17,9 @@ export const userService = {
 		} catch (error) {
 			throw error;
 		}
-	},
+	}
 
-	listAll: async () => {
+	public async listAll() {
 		return [
 			{
 				_id: String(Math.floor(Math.random() * 1000)),
@@ -29,9 +32,9 @@ export const userService = {
 				email: "foobar@gmail.com",
 			},
 		];
-	},
+	}
 
-	create: async (createUserDto: CreateUserDto) => {
+	public async create(createUserDto: CreateUserDto) {
 		try {
 			if (!createUserDto)
 				throw httpException("User data was not sent.", HttpStatus.BAD_REQUEST);
@@ -43,9 +46,9 @@ export const userService = {
 		} catch (error) {
 			throw error;
 		}
-	},
+	}
 
-	update: async (id: string, createUserDto: CreateUserDto) => {
+	public async update(id: string, createUserDto: CreateUserDto) {
 		try {
 			if (!id) throw httpException("Id user not found.", HttpStatus.NOT_FOUND);
 			if (!createUserDto)
@@ -58,14 +61,14 @@ export const userService = {
 		} catch (error) {
 			throw error;
 		}
-	},
+	}
 
-	remove: async (id: string) => {
+	public async remove(id: string) {
 		try {
 			if (!id) throw httpException("Id user not found.", HttpStatus.NOT_FOUND);
 			return { message: "User successfully removed" };
 		} catch (error) {
 			throw error;
 		}
-	},
-};
+	}
+}

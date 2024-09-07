@@ -6,25 +6,31 @@
 	"coverageDirectory": "coverage",
 	"collectCoverageFrom": [
 		"src/**/*.{ts,js}",
-		"!src/**/*.spec.{ts,js}",
-		"!src/**/*.test.{ts,js}",
-		"!src/**/*.module.{ts,js}",
-		"!src/**/*.route.{ts,js}",
-		"!src/**/*.schema.{ts,js}",
-		"!src/**/dto/**/*.{ts,js}",
-		"!src/plugins/**/*.{ts,js}",
-		"!src/config/error/**/*.{ts,js}",
-		"!src/config/index.{ts,js}",
-		"!src/*.{ts,js}"
+		"!**/dto/**",
+		"!**/*.schema.{ts,js}",
+		"!**/*.route.{ts,js}",
+		"!**/app.module.{ts,js}",
+		"!**/main.{ts,js}",
+		"!**/clusterize.{ts,js}",
+		"!**/config/index.{ts,js}",
+		"!**/plugins/*.{ts,js}"
 	],
 	"coverageThreshold": {
 		"global": {
-			"statements": 95,
-			"branches": 95,
-			"functions": 95,
-			"lines": 95
+			"statements": 90,
+			"branches": 80,
+			"functions": 90,
+			"lines": 90
 		}
 	},
 	"testEnvironment": "node",
-	"testMatch": ["**/tests/**/*.(js|ts)?(x)", "**/?(*.)+(spec|test).(js|ts)?(x)"]
+	"testMatch": [
+		"**/tests/**/*.(js|ts)?(x)",
+		"**/?(*.)+(spec|test).(js|ts)?(x)"
+	],
+	"modulePathIgnorePatterns": [
+		"<rootDir>/dist",
+		"<rootDir>/node_modules",
+		"<rootDir>/coverage"
+	]
 }

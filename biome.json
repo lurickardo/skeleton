@@ -11,8 +11,8 @@
 				"noExplicitAny": "off"
 			},
 			"complexity": {
-				"noForEach": "off",
-				"noUselessCatch": "off"
+				"noUselessCatch": "off",
+				"noStaticOnlyClass": "off"
 			}
 		}
 	},

@@ -1,5 +1,5 @@
 import fastifyCors from "@fastify/cors";
-import { FastifyInstance } from "fastify";
+import type { FastifyInstance } from "fastify";
 
 export const cors = (fastify: FastifyInstance) => {
 	fastify.register(fastifyCors, {

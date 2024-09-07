@@ -1,5 +1,5 @@
-import * as Cluster from "cluster";
-import { cpus } from "os";
+import * as Cluster from "node:cluster";
+import { cpus } from "node:os";
 
 const cluster = Cluster as any;
 
