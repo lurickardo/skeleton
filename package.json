@@ -9,9 +9,9 @@
 	"scripts": {
 		"pipe": "npm run prebuild && npm run build && npm run postbuild",
 		"prebuild": "rm -rf dist/ node_modules/ *lock*",
-		"build": "npm install && npx tsc",
-		"postbuild": "cp package.json dist/ && cp *lock* dist/ && cd dist && npm install --production",
-		"prd": "node --env-file=.env dist/src/main.js",
+		"build": "npm install --omit-dev && tsc",
+		"postbuild": "cp -r node_modules/ dist/ && cp package*.json dist/",
+		"prd": "node dist/src/main.js",
 		"dev": "ts-node-dev --respawn --transpile-only --env-file=.env src/main.ts",
 		"test": "jest --runInBand --coverage --config ./test/jest.config.json",
 		"test:watch": "jest --runInBand --config ./test/jest.config.json --watch",
