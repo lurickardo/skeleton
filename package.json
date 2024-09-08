@@ -7,9 +7,9 @@
 	"private": true,
 	"license": "MIT",
 	"scripts": {
-		"pipe": "npm run prebuild && npm run build && npm run postbuild",
+		"pipe": "bun run prebuild && bun run build && bun run postbuild",
 		"prebuild": "rm -rf dist/ node_modules/ *lock*",
-		"build": "npm install --omit-dev && tsc",
+		"build": "bun install --omit-dev && tsc",
 		"postbuild": "cp -r node_modules/ dist/ && cp package*.json dist/",
 		"prd": "node dist/src/main.js",
 		"dev": "ts-node-dev --respawn --transpile-only --env-file=.env src/main.ts",
@@ -43,8 +43,8 @@
 	},
 	"husky": {
 		"hooks": {
-			"pre-commit": "npm install && npm run lint:check && npm run test:cov && npm run build",
-			"pre-push": "npm install && npm run lint:check && npm run test:cov && npm run build"
+			"pre-commit": "bun install && bun run lint:check && bun run test:cov && bun run build",
+			"pre-push": "bun install && bun run lint:check && bun run test:cov && bun run build"
 		}
 	}
 }

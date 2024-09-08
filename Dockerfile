@@ -1,10 +1,12 @@
 FROM node:22 AS build
 
+RUN curl -fsSL https://bun.sh/install | bash -s "bun-v1.1.26"
+
+ENV PATH="/root/.bun/bin:${PATH}"
+
 WORKDIR /app
 
 COPY . .
-
-RUN npm install typescript -g
 
 RUN npm run pipe
 
