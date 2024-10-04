@@ -3,7 +3,7 @@ import swaggerScalar from "@scalar/fastify-api-reference";
 import type { FastifyInstance } from "fastify";
 import * as application from "../../package.json";
 
-export const swagger = async (fastify: FastifyInstance, config: any) => {
+export const swagger = async (fastify, config: any) => {
 	await fastify.register(fastifySwagger, {
 		swagger: {
 			info: {
